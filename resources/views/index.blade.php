@@ -11,41 +11,45 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
     <title>CSV File Upload</title>
-    <style>
-        .input {
-            transition: border 0.2s ease-in-out;
-            min-width: 280px
-        }
-    
-        .input:focus+.label,
-        .input:active+.label,
-        .input.filled+.label {
-            font-size: .75rem;
-            transition: all 0.2s ease-out;
-            top: -0.1rem;
-            color: #667eea;
-        }
-    
-        .label {
-            transition: all 0.2s ease-out;
-            top: 0.4rem;
-              left: 0;
-        }
-    </style>
 </head>
 <body>
+    <div class="container">
+        <h4>Upload CSV File</h4> 
+
     <form action="{{url('/')}}" method="POST" enctype="multipart/form-data">
         {{ csrf_field() }}
-        <div class="flex p-10 bg-white max-w-xl rounded">
-        <div class="mb-4 relative">
-        <input id="file" type="file" name="file" autofocus class="input border border-gray-400 appearance-none rounded w-full px-3 py-3 pt-5 pb-2 focus focus:border-indigo-600 focus:outline-none active:outline-none active:border-indigo-600">
-        <label for="file" for="email" class="label absolute mb-0 -mt-2 pt-4 pl-3 leading-tighter text-gray-400 text-base mt-2 cursor-text">Upload CSV File</label>
-        </div>
-        <input type="submit" name="submit" class="bg-indigo-600 hover:bg-blue-dark text-white font-bold py-3 px-6  m-5 rounded"> 
-
-        </div>
+        <div class="input-group">
+            <input type="file" class="form-control" name="file" placeholder="Search..">
+            <div class="input-group-btn">
+              <button class="btn btn-primary" type="submit">
+                Submit
+              </button>
+            </div>
+          </div>
+    
+        {{-- <input id="file" type="file" name="file" tyle="margin:15px; width:50%;"  class="form-control" required>
+        <input type="submit" name="submit" style="margin:15px; width:50%;"class="btn btn-primary form-control">  --}}
+        
     </form>
-    <h3 style="text-align:center">Inventory List</h3> 
+    <h3 style="text-align:center"><b>Inventory List</b></h3> 
+
+    <div class="row" style="padding-right:25px">
+            
+        <div class="col-md-6" style="padding-bottom:5px;">       
+        </div>
+
+        <div class="col-md-6">
+            <form action="/search" method="GET" style="margin: 15px">
+                <div class="input-group">
+                    <input type="search" class="form-control" name="search" placeholder="Search..">
+                    <div class="input-group-btn">
+                      <button class="btn btn-primary" type="submit">
+                        <i class="glyphicon glyphicon-search"></i>
+                      </button>
+                    </div>
+                  </div>
+            </form>
+        </div>
 
     @if (count($inventories)>0)
     <table class="table table-striped">
@@ -78,37 +82,9 @@
  @else
     <p class="alert alert-warning">No inventories found!</p>
 @endif
+    </div>
 
 
 
-
-
-    <script>
-        var toggleInputContainer = function (input) {
-            if (input.value != "") {
-                input.classList.add('filled');
-            } else {
-                input.classList.remove('filled');
-            }
-        }
-    
-        var labels = document.querySelectorAll('.label');
-        for (var i = 0; i < labels.length; i++) {
-            labels[i].addEventListener('click', function () {
-                this.previousElementSibling.focus();
-            });
-        }
-    
-        window.addEventListener("load", function () {
-            var inputs = document.getElementsByClassName("input");
-            for (var i = 0; i < inputs.length; i++) {
-                console.log('looped');
-                inputs[i].addEventListener('keyup', function () {
-                    toggleInputContainer(this);
-                });
-                toggleInputContainer(inputs[i]);
-            }
-        });
-    </script>
 </body>
 </html>

@@ -7,8 +7,6 @@ use App\Models\Inventory;
 use App\Http\Requests;
 
 
-
-
 class InventoryController extends Controller
 {
     public function index(){
