@@ -37,7 +37,7 @@ You can now access the server at http://localhost:8000
 
 **TL;DR command list**
 
-    git@github.com:KennethMathari/Upload-CSV-File-Data-to-Database.git
+    git clone git@github.com:KennethMathari/Upload-CSV-File-Data-to-Database.git
     cd Upload-CSV-File-Data-to-Database
     composer install
     cp .env.example .env
