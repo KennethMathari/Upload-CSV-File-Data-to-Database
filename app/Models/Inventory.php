@@ -13,5 +13,6 @@ class Inventory extends Model
      * @var string
      */
     protected $table='inventory';
+    protected $fillable = ['invoiceno','stockcode','description','quantity','invoicedate','unitprice','customerid','country'];
     use HasFactory;
 }

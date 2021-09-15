@@ -19,7 +19,7 @@ class CreateInventoryTable extends Migration
             $table->string('Description');
             $table->integer('Quantity');
             $table->dateTime('InvoiceDate');
-            $table->float('UnitPrice');
+            $table->string('UnitPrice');
             $table->integer('Customer');
             $table->string('Country');
             $table->timestamps();
