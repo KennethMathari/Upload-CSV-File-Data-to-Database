@@ -17,10 +17,11 @@ use App\Models\Inventory;
 */
 
 Route::get('/', [InventoryController::class, 'index'])->name('index');
+Route::get('/search', [InventoryController::class, 'search'])->name('search');
 Route::post('/', [InventoryController::class, 'upload'])->name('upload');
 
 
-Route::get('/hehe', function(){
+Route::get('/test', function(){
     (new Inventory())->importToDB();
     dd('done');
 });

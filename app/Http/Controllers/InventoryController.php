@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Inventory;
 use App\Http\Requests;
+use DB;
 
 
 class InventoryController extends Controller
@@ -45,5 +46,11 @@ class InventoryController extends Controller
         session()->flash('status','Just a minute..');
 
         return redirect('/');
+    }
+
+    public function search(Request $request){
+        $search=$request->get('search');
+        $inventories=DB::table('inventory')->where('Description','like','%'.$search.'%')->paginate(5);
+        return view('index',['inventories'=>$inventories]);
     }
 }
