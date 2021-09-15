@@ -88,6 +88,9 @@ class InventoryController extends Controller
             file_put_contents($fileName,$part);
         };
 
+        //Process smaller CSV files
+        (new Inventory())->importToDB();
+        
         session()->flash('status','Just a minute..');
 
         return redirect('/');

@@ -24,13 +24,13 @@ class Inventory extends Model
         //Get CSV File Path
         $file=resource_path('pendingfiles/*.csv');
         //Get CSV PendingFiles from resource path
-        $g=glob($file);
-        /**Loop through each pending files.
-        * Process 1 file at a time.
-        */
+        $files=glob($file);
+        
         //Set Max Execution Time
         ini_set('max_execution_time','1800');
-        foreach (array_slice($g,0,1) as $file) {
+        
+        //Loop through each pending files.
+        foreach ($files as $file) {
             ProcessCSVUpload::dispatch($file);
         }
     }

@@ -32,6 +32,7 @@ class ProcessCSVUpload implements ShouldQueue
      */
     public function handle()
     {
+        Redis::throttle('upload-csv')->allow(10)->every(60)->then(function (){
         //Get data from CSV file
         $data=array_map('str_getcsv', file($this->file));
         //Loop through data records
@@ -51,5 +52,11 @@ class ProcessCSVUpload implements ShouldQueue
         }
         //delete file
         unlink($this->file);
+
+        },function (){
+            return $this->release(10);
+        });
+
+        
     }
 }
