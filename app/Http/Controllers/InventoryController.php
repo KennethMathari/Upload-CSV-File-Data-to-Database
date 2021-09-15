@@ -8,6 +8,7 @@ use App\Http\Requests;
 
 
 
+
 class InventoryController extends Controller
 {
     public function index(){
@@ -67,6 +68,9 @@ class InventoryController extends Controller
         $request->validate([
             'file'=>'required|mimes:csv,txt'
         ]);
+        //Increase File Upload Memory Limit
+        ini_set('memory_limit','1024M');
+
 
         //Read Entire File
         $file=file($request->file->getRealPath());
@@ -76,5 +80,16 @@ class InventoryController extends Controller
 
         //Split Every 5000 records
         $parts=(array_chunk($data, 5000));
+
+        //Loop through each record bunch
+        foreach ($parts as $index=>$part) {
+            $fileName= resource_path('pendingfiles/'.date('y-m-d-H-i-s').$index.'.csv');
+            //Write File Content
+            file_put_contents($fileName,$part);
+        };
+
+        session()->flash('status','Just a minute..');
+
+        return redirect('/');
     }
 }
