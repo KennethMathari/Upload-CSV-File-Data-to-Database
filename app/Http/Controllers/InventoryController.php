@@ -10,7 +10,7 @@ class InventoryController extends Controller
         return view('index');
     }
 
-    public function upload(){
-        
+    public function upload(Request $request){
+
     }
 }
