@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\InventoryController;
+use App\Models\Inventory;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +19,8 @@ use App\Http\Controllers\InventoryController;
 Route::get('/', [InventoryController::class, 'index'])->name('index');
 Route::post('/', [InventoryController::class, 'upload'])->name('upload');
 
+
+Route::get('/hehe', function(){
+    (new Inventory())->importToDB();
+    dd('done');
+});
