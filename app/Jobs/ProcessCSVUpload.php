@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -32,7 +33,8 @@ class ProcessCSVUpload implements ShouldQueue
      */
     public function handle()
     {
-        Redis::throttle('upload-csv')->allow(10)->every(60)->then(function (){
+        Redis::throttle('upload-csv')->allow(1)->every(20)->then(function (){
+        dump('Loading this file:', $this->file);
         //Get data from CSV file
         $data=array_map('str_getcsv', file($this->file));
         //Loop through data records
@@ -50,6 +52,8 @@ class ProcessCSVUpload implements ShouldQueue
                 'Country'=>$row[7]
             ]);
         }
+
+        dump('Completed uploading:', $this->file);
         //delete file
         unlink($this->file);
 
