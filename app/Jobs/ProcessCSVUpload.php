@@ -8,19 +8,21 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use App\Models\Inventory;
+
 
 class ProcessCSVUpload implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
+    public $file;
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $file)
     {
-        //
+        $this->file=$file;
     }
 
     /**
@@ -31,10 +33,10 @@ class ProcessCSVUpload implements ShouldQueue
     public function handle()
     {
         //Get data from CSV file
-        $data=array_map('str_getcsv', file($file));
+        $data=array_map('str_getcsv', file($this->file));
         //Loop through data records
         foreach ($data as $row) {
-            self::updateOrCreate([
+            Inventory::updateOrCreate([
                 //checks if invoiceno. exists
                 'InvoiceNo'=>$row[0]
             ],[
@@ -48,6 +50,6 @@ class ProcessCSVUpload implements ShouldQueue
             ]);
         }
         //delete file
-        unlink($file);
+        unlink($this->file);
     }
 }
